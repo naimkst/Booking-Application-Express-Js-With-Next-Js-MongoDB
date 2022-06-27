@@ -4,8 +4,10 @@ import Hotel from '../models/Hotels.js';
 
 //Create a new hotel
 router.post("/", async (req, res) => {
+  console.log(req.body);
   try {
-    const hotel = await new Hotel.save(req.body);
+    const hotel = await new Hotel(req.body).save();
+    res.status(200).json(hotel);
   } catch (error) {
     res.status(500).json(error);
   }
