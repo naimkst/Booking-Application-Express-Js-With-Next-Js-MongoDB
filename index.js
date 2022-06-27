@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
 import roomRouter from "./routes/rooms.js";
 import hotelRouter from "./routes/hotels.js";
+import cookieParser from "cookie-parser";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -22,6 +23,9 @@ const dbConnet = async () => {
   }
 };
 
+//Cookie parser
+app.use(cookieParser());
+
 //Json Format for the response
 app.use(express.json());
 
@@ -30,6 +34,17 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/hotel", hotelRouter);
 app.use("/api/room", roomRouter);
+
+app.use((error, req, res, next) => {
+  const errorStatus = error.status || 500;
+  const errorMessage = error.message || "Something went wrong";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: error
+  });
+});
 
 //Leasen Port
 app.listen(8000, () => {
