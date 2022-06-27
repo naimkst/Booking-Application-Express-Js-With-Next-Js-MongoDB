@@ -31,7 +31,7 @@ export const userLogin = async (req, res, next) => {
     }
     const token = Jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
     const { password, ...userWithoutPassword } = user.toObject();
-    res.cookie('access_tone', token, {
+    res.cookie('access_token', token, {
       httpOnly: true,
     }).status(200).json(userWithoutPassword);
   } catch (error) {
