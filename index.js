@@ -6,6 +6,7 @@ import userRouter from "./routes/users.js";
 import roomRouter from "./routes/rooms.js";
 import hotelRouter from "./routes/hotels.js";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -25,6 +26,7 @@ const dbConnet = async () => {
 
 //Cookie parser
 app.use(cookieParser());
+app.use(cors());
 
 //Json Format for the response
 app.use(express.json());
